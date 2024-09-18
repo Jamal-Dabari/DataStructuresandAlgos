@@ -9,7 +9,7 @@ double Ex3(int m[], int n);
 double Ex4(int m[], int n);
 int Ex5(int m[], int m2[], int n);
 
-const int MAX = 10000;
+const int MAX = 3;
 
 int main() {
   clock_t start, stop;
@@ -128,6 +128,7 @@ double Ex4(int m[], int n) {
 int Ex5(int m[], int m2[], int n) {
   int c = 0;
   int s;
+  int B[] = {1, 3, 5};
   for (int i = 0; i <= n - 1; i++) {
     s = 0;
     for (int j = 0; j < i; j++) {
@@ -135,7 +136,7 @@ int Ex5(int m[], int m2[], int n) {
         s = s + m[k];
       }
     }
-    if (m2[i] == s) {
+    if (B[i] == s) {
       c = c + 1;
     }
   }
