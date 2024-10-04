@@ -4,63 +4,94 @@ using namespace std;
 
 void selectionSort(int[], int);
 void bubbleSort(int[], int);
-void insertionSort(int[], int);
+void insertionSort(int[], int, int);
 void merge(int[], int, int, int);
 void mergeSort(int[], int, int);
 void radixSort(int[], int);
 void quickSort(int[], int, int);
 
-const int size = 8;
+const int SIZE = 2048;
+
+
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
 
 int main() {
   clock_t start, stop;
 
-  int arr[size];
+  int arr[SIZE];
 
-  for (int i = size - 1; i >= 0; i--) {
+  for(int i=0; i<SIZE;i++){
+    arr[i] = SIZE-1-i;
+  }
+
+
+  start = clock();
+  selectionSort(arr, SIZE);
+  stop = clock();
+
+  cout << "Running time for Selection Sort with array size of " << SIZE
+       << " is " << static_cast<double>(stop - start) << endl;
+  
+
+  for (int i = SIZE - 1; i >= 0; i--) {
     arr[i] = i;
   }
 
   start = clock();
-  selectionSort(arr, size);
+  bubbleSort(arr, SIZE);
   stop = clock();
 
-  cout << "Running time for Selection Sort with array size of " << size
+  cout << "Running time for Bubble Sort with array size of " << SIZE << " is "
+       << static_cast<double>(stop - start) << endl;
+
+  for (int i = SIZE - 1; i >= 0; i--) {
+    arr[i] = i;
+  }
+
+  start = clock();
+  insertionSort(arr, 0, SIZE - 1);
+  stop = clock();
+
+  cout << "Running time for Insertion Sort with array size of " << SIZE
        << " is " << static_cast<double>(stop - start) << endl;
 
+  for (int i = SIZE - 1; i >= 0; i--) {
+    arr[i] = i;
+  }
+
   start = clock();
-  bubbleSort(arr, size);
+  mergeSort(arr, 0, SIZE - 1);
   stop = clock();
 
-  cout << "Running time for Bubble Sort with array size of " << size << " is "
+  cout << "Running time for Merge Sort with array size of " << SIZE << " is "
        << static_cast<double>(stop - start) << endl;
 
-  start = clock();
-  insertionSort(arr, size);
-  stop = clock();
-
-  cout << "Running time for Insertion Sort with array size of " << size
-       << " is " << static_cast<double>(stop - start) << endl;
+  for (int i = SIZE - 1; i >= 0; i--) {
+    arr[i] = i;
+  }
 
   start = clock();
-  mergeSort(arr, 0, size - 1);
+  quickSort(arr, 0, SIZE - 1);
   stop = clock();
 
-  cout << "Running time for Merge Sort with array size of " << size << " is "
+  cout << "Running time for Quick Sort with array size of " << SIZE << " is "
        << static_cast<double>(stop - start) << endl;
 
-  start = clock();
-  quickSort(arr, 0, size - 1);
-  stop = clock();
-
-  cout << "Running time for Quick Sort with array size of " << size << " is "
-       << static_cast<double>(stop - start) << endl;
+  for (int i = SIZE - 1; i >= 0; i--) {
+    arr[i] = i;
+  }
 
   start = clock();
-  radixSort(arr, size);
+  radixSort(arr, SIZE);
   stop = clock();
 
-  cout << "Running time for Radix Sort with array size of " << size << " is "
+  cout << "Running time for Radix Sort with array size of " << SIZE << " is "
        << static_cast<double>(stop - start) << endl;
 }
 
@@ -113,47 +144,35 @@ void insertionSort(int arr[], int first, int last) {
   }
 }
 
-int sortFirstMiddleLast(int arr[], int low, int high) {
-  int mid = low + (high - low) / 2;
+void sortFirstMiddleLast(int arr[], int first, int mid, int last) {
   int temp;
-  int temp1;
-  int temp2;
-  int temp3;
-
-  // Sort the first, middle, and last elements
-  if (arr[mid] < arr[low]) {
-    temp = arr[low];
-    arr[low] = arr[mid];
+  if (arr[first] > arr[mid]) {
+    temp = arr[first];
+    arr[first] = arr[mid];
     arr[mid] = temp;
   }
 
-  if (arr[high] < arr[low]) {
-    temp1 = arr[low];
-    arr[low] = arr[high];
-    arr[high] = temp1;
+  if (arr[mid] > arr[last]) {
+    temp = arr[mid];
+    arr[mid] = arr[last];
+    arr[last] = temp;
   }
 
-  if (arr[high] < arr[mid]) {
-    temp2 = arr[mid];
-    arr[mid] = arr[high];
-    arr[high] = temp2;
+  if (arr[first] > arr[mid]) {
+    temp = arr[first];
+    arr[first] = arr[mid];
+    arr[mid] = temp;
   }
-
-  // Use the median as the pivot
-  temp3 = arr[mid];
-  arr[mid] = arr[high - 1];
-  arr[high - 1] = temp;
-  return arr[high - 1];
 }
 
 void merge(int arr[], int first, int mid, int last) {
-  int tempArr[size];
+  int tempArr[last - first + 1];
   int first1 = first;
   int last1 = mid;
   int first2 = mid + 1;
   int last2 = last;
 
-  int index = first1;
+  int index = 0;
   while ((first1 <= last1) && (first2 <= last2)) {
     if (arr[first1] <= arr[first2]) {
       tempArr[index] = arr[first1];
@@ -177,8 +196,8 @@ void merge(int arr[], int first, int mid, int last) {
     index++;
   }
 
-  for (index = first; index <= last; index++) {
-    arr[index] = tempArr[index];
+  for (index =0; index < last-first+1; index++) {
+    arr[first+index] = tempArr[index];
   }
 }
 
@@ -191,33 +210,56 @@ void mergeSort(int arr[], int first, int last) {
   }
 }
 
-int partition(int arr[], int low, int high) {
-  int pivot = sortFirstMiddleLast(arr, low, high);
-  int i = low;
-  int j = high - 2;
+int partition(int arr[], int first, int last) {
   int temp;
-  int temp2;
+  int pivotIndex;
+  int mid = first + (last - first) / 2;
+  sortFirstMiddleLast(arr, first, mid, last);
+  temp = arr[mid];
+  arr[mid] = arr[last - 1];
+  pivotIndex = last - 1;
+  int pivot = arr[pivotIndex];
 
-  for (int j = low; j <= high - 1; j++) {
-    if (arr[j] <= pivot) {
-      i++;
-      temp = arr[i];
-      arr[i] = arr[j];
-      arr[j] = temp;
+  int indexFromLeft = first + 1;
+  int indexFromRight = last - 2;
+
+  bool done = false;
+
+  while (!done) {
+    while (arr[indexFromLeft] < pivot) {
+      indexFromLeft++;
+    }
+
+    while (arr[indexFromRight] > pivot) {
+      indexFromRight--;
+    }
+
+    if (indexFromLeft < indexFromRight) {
+      temp = arr[indexFromLeft];
+      arr[indexFromLeft] = arr[indexFromRight];
+      arr[indexFromRight] = temp;
+
+      indexFromLeft += 1;
+      indexFromRight -= 1;
+    } else {
+      done = true;
     }
   }
-  temp2 = arr[i + 1];
-  arr[i + 1] = arr[high];
-  arr[high] = temp2;
-  return (i + 1);
+  temp = arr[pivotIndex];
+  arr[pivotIndex] = arr[indexFromLeft];
+  arr[indexFromLeft] = temp;
+  pivotIndex = indexFromLeft;
+  return pivotIndex;
 }
 
 void quickSort(int arr[], int first, int last) {
+  if ((last - first + 1) < 10) {
+    insertionSort(arr, first, last);
+  } else {
+    int pivotIndex = partition(arr, first, last);
 
-  if (first < last) {
-    int pi = partition(arr, first, last);
-    quickSort(arr, first, pi - 1);
-    quickSort(arr, pi + 1, last);
+    quickSort(arr, first, pivotIndex - 1);
+    quickSort(arr, pivotIndex + 1, last);
   }
 }
 
@@ -256,8 +298,8 @@ void Sort(int arr[], int size, int exp) {
 }
 
 void radixSort(int arr[], int size) {
-  int maxVal = getMax(arr, size);
-  for (int exp = 1; maxVal / exp > 0; exp *= 10) {
-    Sort(arr, size, exp);
+  int max = getMax(arr, size);
+  for (int i = 1; max / i > 0; max *= 10) {
+    Sort(arr, size, i);
   }
 }
