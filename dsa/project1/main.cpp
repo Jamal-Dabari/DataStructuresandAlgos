@@ -10,7 +10,7 @@ void mergeSort(int[], int, int);
 void radixSort(int[], int);
 void quickSort(int[], int, int);
 
-const int SIZE = 2048;
+const int SIZE = 8;
 
 
 void printArray(int arr[], int size) {
@@ -30,6 +30,8 @@ int main() {
     arr[i] = SIZE-1-i;
   }
 
+  printArray(arr,SIZE);
+
 
   start = clock();
   selectionSort(arr, SIZE);
@@ -38,6 +40,7 @@ int main() {
   cout << "Running time for Selection Sort with array size of " << SIZE
        << " is " << static_cast<double>(stop - start) << endl;
   
+  printArray(arr,SIZE);
 
   for (int i = SIZE - 1; i >= 0; i--) {
     arr[i] = i;
@@ -50,6 +53,7 @@ int main() {
   cout << "Running time for Bubble Sort with array size of " << SIZE << " is "
        << static_cast<double>(stop - start) << endl;
 
+  printArray(arr,SIZE);
   for (int i = SIZE - 1; i >= 0; i--) {
     arr[i] = i;
   }
@@ -61,6 +65,7 @@ int main() {
   cout << "Running time for Insertion Sort with array size of " << SIZE
        << " is " << static_cast<double>(stop - start) << endl;
 
+  printArray(arr,SIZE);
   for (int i = SIZE - 1; i >= 0; i--) {
     arr[i] = i;
   }
@@ -72,6 +77,7 @@ int main() {
   cout << "Running time for Merge Sort with array size of " << SIZE << " is "
        << static_cast<double>(stop - start) << endl;
 
+  printArray(arr,SIZE);
   for (int i = SIZE - 1; i >= 0; i--) {
     arr[i] = i;
   }
@@ -83,6 +89,7 @@ int main() {
   cout << "Running time for Quick Sort with array size of " << SIZE << " is "
        << static_cast<double>(stop - start) << endl;
 
+  printArray(arr,SIZE);
   for (int i = SIZE - 1; i >= 0; i--) {
     arr[i] = i;
   }
@@ -93,6 +100,7 @@ int main() {
 
   cout << "Running time for Radix Sort with array size of " << SIZE << " is "
        << static_cast<double>(stop - start) << endl;
+  printArray(arr,SIZE);
 }
 
 void selectionSort(int arr[], int size) {
