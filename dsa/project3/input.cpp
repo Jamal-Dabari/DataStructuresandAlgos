@@ -42,11 +42,11 @@ public:
   }
 
   // Function to print the adjacency list of the graph
-  void printGraph() {
+  void printGraph(const int nodes[]) {
     // Iterate through each vertex
     for (int i = 0; i < adjList.size(); ++i) {
       // Print the vertex
-      cout << i << ": ";
+      cout << nodes[i] << ": ";
       // Iterate through the adjacency list of the
       // vertex
       for (int j = 0; j < adjList[i].size(); ++j) {

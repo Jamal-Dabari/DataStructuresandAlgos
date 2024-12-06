@@ -1,5 +1,6 @@
 #include "input.cpp"
 #include <iostream>
+#include <unordered_map>
 using namespace std;
 
 int main() {
@@ -33,5 +34,5 @@ int main() {
   }
 
   cout << "Undirected Graph Adjacency List:" << endl;
-  undirectedGraph.printGraph();
+  undirectedGraph.printGraph(nodes);
 }
