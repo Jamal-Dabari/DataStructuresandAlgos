@@ -58,7 +58,7 @@ public:
       cout << "NULL" << endl;
     }
   }
-  void dfsrec (vector <vector<int>> &adj, vector <bool> &visted, int s)
+  void dfsrec (vector <vector<int> > &adj, vector <bool> &visted, int s)
   {
     for(size_t j=0;j<adj[s].size();++j)
     {
@@ -70,13 +70,20 @@ public:
     }
   }
 
-void dfs(const vector <vector<int>> &adj ,int startNode)
+void dfs(const vector <vector<int> > &adj ,int startNode)
 {
 vector <bool> visted(adj.size(),false); //set all nodes to false
 
 performDFS(adj,visted,startNode);//start recursivly from given start node
 }
 
+void performDFS(const vector<vector<int> > &adj,vector<bool>& visted ,int currentNode )
+{
+visted[currentNode]=true; //mark current node as visted
+
+cout<<"Visting node: " << currentNode<< endl; 
+
+}
 
 
 };
