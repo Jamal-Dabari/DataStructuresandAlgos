@@ -35,4 +35,8 @@ int main() {
 
   cout << "Undirected Graph Adjacency List:" << endl;
   undirectedGraph.printGraph(nodes);
+
+  cout << "Connectivity Status: " << endl;
+  cout << "Shortest Path: " << endl;
+  cout << "total distance: " << endl;
 }
